@@ -1,5 +1,5 @@
 /**
- * 
+ * 字符集类
  */
 /**
  * @author zhongqiu
