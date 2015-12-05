@@ -33,12 +33,6 @@ public class Coding {
 		charsetName = charset.name();
 	}
 	
-	public static void main(String[] args) {
-		Coding coding = new Coding();
-		coding.setCharsetName("UTF-8");
-		System.err.println(coding.getCharsetName());
-	}
-	
 	public String getCharsetName() {
 		return charsetName;
 	}
