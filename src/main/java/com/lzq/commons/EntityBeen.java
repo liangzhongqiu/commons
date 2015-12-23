@@ -18,19 +18,21 @@ public abstract class EntityBeen {
 	 * @param mapOfFieldsAndValues
 	 */
 	public void setFieldsValueFromMap(Map<String,Object> mapOfFieldsAndValues){
-		if(mapOfFieldsAndValues == null){
+		if(mapOfFieldsAndValues == null || mapOfFieldsAndValues.size() == 0){
 			return;
 		}
 		Class<?> clazz = getClass();
+		String key;
+		Object value;
 		for(Map.Entry<String,Object> entry : mapOfFieldsAndValues.entrySet()){
-			String key = entry.getKey();
+			key = entry.getKey();
 			if(key == null){
 				continue;
 			}
-			Object object = entry.getValue();
+			value = entry.getValue();
 			try {
-				Method setMethod = clazz.getDeclaredMethod("set"+key.substring(0,1).toUpperCase()+key.substring(1),object.getClass());
-				setMethod.invoke(this,object);
+				Method setMethod = clazz.getDeclaredMethod("set"+key.substring(0,1).toUpperCase()+key.substring(1),value.getClass());
+				setMethod.invoke(this,value);
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
