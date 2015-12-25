@@ -1,16 +1,25 @@
 package com.lzq.commons;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+
 /**
  * 页码
  * @author zhongqiu
  * @date 2015年11月14日
  * @time 下午8:56:25
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Page {
 	/**当前页*/
+	@XmlElement(name="CurrentPage")
 	private Integer currentPage;
 	/**每页多少行*/
+	@XmlElement(name="PageSize")
 	private Integer pageSize;
 	/**总行数*/
+	@XmlElement(name="Rows")
 	private Integer rows;
 	
 	public Page() {

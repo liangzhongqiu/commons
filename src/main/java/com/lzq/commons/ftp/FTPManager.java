@@ -44,30 +44,32 @@ public class FTPManager extends PrintLog{
 	}
 
 	public boolean upload(String dir,String fileName,InputStream in){
-		try {
-			if(init()){
-				setFTPClientFileds();
-				ftpClient.makeDirectory(dir);
-				ftpClient.changeWorkingDirectory(dir);
-				return ftpClient.storeFile(fileName, in);
-			}
-		} catch (IOException e) {
-			log.error("FTP上传文件出错>>>",e);
-		}
-		return false;
+		return extract(dir, fileName, in, null,true);
 	}
+	
 	public boolean download(String pathname,OutputStream out){
+		return extract(null,pathname,null, out,false);
+	}
+	private synchronized boolean extract(String dir,String fileName,InputStream in,OutputStream out,boolean upload){
+		boolean success = false;
 		try {
 			if(init()){
 				setFTPClientFileds();
-				return ftpClient.retrieveFile(pathname,out);
+				if(upload){
+					ftpClient.makeDirectory(dir);
+					ftpClient.changeWorkingDirectory(dir);
+					success = ftpClient.storeFile(fileName, in);
+				}else{
+					success = ftpClient.retrieveFile(fileName,out);
+				}
+				logout();
 			}
 		} catch (IOException e) {
-			log.error("FTP下载文件出错>>>",e);
+			log.error("FTP出错>>>",e);
 		}
-		return false;
+		return success;
 	}
-
+	
 	private void setFTPClientFileds() throws IOException {
 		if(coding != null){
 			ftpClient.setControlEncoding(coding.getCharsetName());
@@ -76,7 +78,7 @@ public class FTPManager extends PrintLog{
 			ftpClient.setFileType(fileType);
 		}
 	}
-	private synchronized boolean init(){
+	private boolean init(){
 		connect();
 		login();
 		return hasConnect && hasLogin;
@@ -123,7 +125,7 @@ public class FTPManager extends PrintLog{
 		}
 		return hasLogin;
 	}
-	public boolean logout(){
+	private boolean logout(){
 		boolean logout = false;
 		try {
 			if(isHasLogin()){
