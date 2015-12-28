@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 页码
  * @author zhongqiu
@@ -14,9 +16,11 @@ import javax.xml.bind.annotation.XmlElement;
 public class Page {
 	/**当前页*/
 	@XmlElement(name="CurrentPage")
+	@JsonProperty(value="current_page")
 	private Integer currentPage;
 	/**每页多少行*/
 	@XmlElement(name="PageSize")
+	@JsonProperty(value="page_size")
 	private Integer pageSize;
 	/**总行数*/
 	@XmlElement(name="Rows")
