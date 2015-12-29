@@ -66,6 +66,8 @@ public class FTPManager extends PrintLog{
 			}
 		} catch (IOException e) {
 			log.error("FTP出错>>>",e);
+		}finally{
+			disconnect();
 		}
 		return success;
 	}
@@ -86,14 +88,14 @@ public class FTPManager extends PrintLog{
 	
 	public boolean disconnect(){
 		try {
-			if(isHasConnect()){
+			if(ftpClient.isConnected()){
 				ftpClient.disconnect();
-				hasConnect = false;
-				hasLogin = false;
 			}
 		} catch (IOException e) {
 			log.error("关闭FTP连接出错>>>",e);
 		}
+		hasConnect = false;
+		hasLogin = false;
 		return hasConnect;
 	}
 	
