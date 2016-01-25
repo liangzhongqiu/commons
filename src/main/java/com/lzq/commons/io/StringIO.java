@@ -1,11 +1,15 @@
 package com.lzq.commons.io;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 /**
  * 
@@ -14,6 +18,9 @@ import java.nio.charset.Charset;
  * @time 下午3:45:53
  */
 public abstract class StringIO {
+	
+	public static final int BUFFER_SIZE = 1024*8;
+	
 	/**
 	 * 从输入流中读出字符串
 	 * @param in 输入流
@@ -67,4 +74,22 @@ public abstract class StringIO {
 	public static String read(String path,Charset charset,boolean keepIntact) throws IOException{
 		return read(new File(path), charset, keepIntact);
 	}
+	
+	public static void write(String content,Charset cs,OutputStream out) throws IOException{
+		BufferedWriter bWriter = null;
+		try {
+			bWriter = new BufferedWriter(new OutputStreamWriter(out, cs));
+			bWriter.write(content);
+		} finally{
+			if(bWriter != null){
+				bWriter.close();
+			}
+		}
+	}
+	
+	public static void write(String content,Charset cs,String fileName,boolean append) throws IOException{
+		OutputStream out = new FileOutputStream(fileName, append);
+		write(content, cs, out);
+	}
+	
 }
