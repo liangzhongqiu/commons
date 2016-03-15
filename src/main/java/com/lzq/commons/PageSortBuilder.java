@@ -11,10 +11,13 @@ public abstract class PageSortBuilder {
 		StringBuilder sql = new StringBuilder();
 		if(sorts != null){
 			sql.append(" ORDER BY ");
+			int i = 0,len = sorts.length;
 			for(Sort sort : sorts){
-				sql.append(sort.getField()).append(" ").append((sort.isAsc()?"ASC":"DESC")).append(",");
+				sql.append(sort.getField()).append(" ").append((sort.isAsc()?"ASC":"DESC"));
+				if(i++<len-1){
+					sql.append(",");
+				}
 			}
-			sql.delete(sql.lastIndexOf(","),sql.length());
 		}
 		if(page != null){
 			int offset = (page.getCurrentPage()-1)*page.getPageSize();
