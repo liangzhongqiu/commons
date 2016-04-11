@@ -8,6 +8,7 @@ package com.lzq.commons.em;
 public enum DateTimeEnum {
 	
 	UNDEFINED(null),
+	COMPACT("yyyyMMddHHmmss"),
 	LONG("yyyy-MM-dd HH:mm:ss"),
 	MIDDLE("yyyy-MM-dd"),
 	SHORT("yyyy-MM");
